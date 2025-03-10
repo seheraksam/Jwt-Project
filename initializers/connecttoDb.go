@@ -11,6 +11,7 @@ import (
 )
 
 var Client *mongo.Client
+var UserCollection *mongo.Collection
 
 func ConnectToDb() error {
 	uri := "mongodb://localhost:27017" // MongoDB URL'ni doğru yaz
@@ -35,5 +36,6 @@ func ConnectToDb() error {
 
 	fmt.Println("MongoDB Connection Established")
 	Client = client
+	UserCollection = client.Database("jwt-project").Collection("users")
 	return err
 }

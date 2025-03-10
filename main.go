@@ -2,11 +2,11 @@ package main
 
 import (
 	"log"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/seheraksam/Jwt-Project/controllers"
 	"github.com/seheraksam/Jwt-Project/initializers"
+	"github.com/seheraksam/Jwt-Project/middleware"
 )
 
 func init() {
@@ -23,11 +23,9 @@ func init() {
 
 func main() {
 	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
+	r.Use(middleware.RequireAuth)
 	r.POST("/signUp", controllers.SignUp)
+	r.POST("/login", controllers.Login)
+	r.POST("/validate", controllers.Validate)
 	r.Run()
 }
